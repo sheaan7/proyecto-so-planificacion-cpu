@@ -1,0 +1,244 @@
+ESCENARIO: 4_variacion_quantum
+Mismos procesos con RR a distintos quantums: quantum pequeño = más cambios de contexto y mejor respuesta; quantum grande = se comporta como FCFS.
+
+=== FCFS ===
+Gantt: | A 0-10 | B 10-14 | C 14-21 | D 21-23 | E 23-28 |
+
+pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
+---  -------  ---  ------  ---------  -------  ------------
+  A        0   10       0          0       10           1.0
+  B        1    4       9          9       13          3.25
+  C        2    7      12         12       19          2.71
+  D        3    2      18         18       20          10.0
+  E        4    5      19         19       24           4.8
+
+Log de estados:
+t=  0 A creado -> LISTO
+t=  0 A -> EJECUCION
+t=  1 B creado -> LISTO
+t=  2 C creado -> LISTO
+t=  3 D creado -> LISTO
+t=  4 E creado -> LISTO
+t= 10 A -> FINALIZADO
+t= 10 B -> EJECUCION
+t= 14 B -> FINALIZADO
+t= 14 C -> EJECUCION
+t= 21 C -> FINALIZADO
+t= 21 D -> EJECUCION
+t= 23 D -> FINALIZADO
+t= 23 E -> EJECUCION
+t= 28 E -> FINALIZADO
+
+=== SJF ===
+Gantt: | A 0-10 | D 10-12 | B 12-16 | E 16-21 | C 21-28 |
+
+pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
+---  -------  ---  ------  ---------  -------  ------------
+  A        0   10       0          0       10           1.0
+  B        1    4      11         11       15          3.75
+  C        2    7      19         19       26          3.71
+  D        3    2       7          7        9           4.5
+  E        4    5      12         12       17           3.4
+
+Log de estados:
+t=  0 A creado -> LISTO
+t=  0 A -> EJECUCION
+t=  1 B creado -> LISTO
+t=  2 C creado -> LISTO
+t=  3 D creado -> LISTO
+t=  4 E creado -> LISTO
+t= 10 A -> FINALIZADO
+t= 10 D -> EJECUCION
+t= 12 D -> FINALIZADO
+t= 12 B -> EJECUCION
+t= 16 B -> FINALIZADO
+t= 16 E -> EJECUCION
+t= 21 E -> FINALIZADO
+t= 21 C -> EJECUCION
+t= 28 C -> FINALIZADO
+
+=== RR(q=1) ===
+Gantt: | A 0-1 | B 1-2 | A 2-3 | C 3-4 | B 4-5 | D 5-6 | A 6-7 | E 7-8 | C 8-9 | B 9-10 | D 10-11 | A 11-12 | E 12-13 | C 13-14 | B 14-15 | A 15-16 | E 16-17 | C 17-18 | A 18-19 | E 19-20 | C 20-21 | A 21-22 | E 22-23 | C 23-24 | A 24-25 | C 25-26 | A 26-28 |
+
+pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
+---  -------  ---  ------  ---------  -------  ------------
+  A        0   10      18          0       28           2.8
+  B        1    4      10          0       14           3.5
+  C        2    7      17          1       24          3.43
+  D        3    2       6          2        8           4.0
+  E        4    5      14          3       19           3.8
+
+Log de estados:
+t=  0 A creado -> LISTO
+t=  0 A -> EJECUCION
+t=  1 B creado -> LISTO
+t=  1 A agota quantum -> LISTO
+t=  1 B -> EJECUCION
+t=  2 C creado -> LISTO
+t=  2 B agota quantum -> LISTO
+t=  2 A -> EJECUCION
+t=  3 D creado -> LISTO
+t=  3 A agota quantum -> LISTO
+t=  3 C -> EJECUCION
+t=  4 E creado -> LISTO
+t=  4 C agota quantum -> LISTO
+t=  4 B -> EJECUCION
+t=  5 B agota quantum -> LISTO
+t=  5 D -> EJECUCION
+t=  6 D agota quantum -> LISTO
+t=  6 A -> EJECUCION
+t=  7 A agota quantum -> LISTO
+t=  7 E -> EJECUCION
+t=  8 E agota quantum -> LISTO
+t=  8 C -> EJECUCION
+t=  9 C agota quantum -> LISTO
+t=  9 B -> EJECUCION
+t= 10 B agota quantum -> LISTO
+t= 10 D -> EJECUCION
+t= 11 D -> FINALIZADO
+t= 11 A -> EJECUCION
+t= 12 A agota quantum -> LISTO
+t= 12 E -> EJECUCION
+t= 13 E agota quantum -> LISTO
+t= 13 C -> EJECUCION
+t= 14 C agota quantum -> LISTO
+t= 14 B -> EJECUCION
+t= 15 B -> FINALIZADO
+t= 15 A -> EJECUCION
+t= 16 A agota quantum -> LISTO
+t= 16 E -> EJECUCION
+t= 17 E agota quantum -> LISTO
+t= 17 C -> EJECUCION
+t= 18 C agota quantum -> LISTO
+t= 18 A -> EJECUCION
+t= 19 A agota quantum -> LISTO
+t= 19 E -> EJECUCION
+t= 20 E agota quantum -> LISTO
+t= 20 C -> EJECUCION
+t= 21 C agota quantum -> LISTO
+t= 21 A -> EJECUCION
+t= 22 A agota quantum -> LISTO
+t= 22 E -> EJECUCION
+t= 23 E -> FINALIZADO
+t= 23 C -> EJECUCION
+t= 24 C agota quantum -> LISTO
+t= 24 A -> EJECUCION
+t= 25 A agota quantum -> LISTO
+t= 25 C -> EJECUCION
+t= 26 C -> FINALIZADO
+t= 26 A -> EJECUCION
+t= 27 A agota quantum -> LISTO
+t= 27 A -> EJECUCION
+t= 28 A -> FINALIZADO
+
+=== RR(q=3) ===
+Gantt: | A 0-3 | B 3-6 | C 6-9 | D 9-11 | A 11-14 | E 14-17 | B 17-18 | C 18-21 | A 21-24 | E 24-26 | C 26-27 | A 27-28 |
+
+pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
+---  -------  ---  ------  ---------  -------  ------------
+  A        0   10      18          0       28           2.8
+  B        1    4      13          2       17          4.25
+  C        2    7      18          4       25          3.57
+  D        3    2       6          6        8           4.0
+  E        4    5      17         10       22           4.4
+
+Log de estados:
+t=  0 A creado -> LISTO
+t=  0 A -> EJECUCION
+t=  1 B creado -> LISTO
+t=  2 C creado -> LISTO
+t=  3 D creado -> LISTO
+t=  3 A agota quantum -> LISTO
+t=  3 B -> EJECUCION
+t=  4 E creado -> LISTO
+t=  6 B agota quantum -> LISTO
+t=  6 C -> EJECUCION
+t=  9 C agota quantum -> LISTO
+t=  9 D -> EJECUCION
+t= 11 D -> FINALIZADO
+t= 11 A -> EJECUCION
+t= 14 A agota quantum -> LISTO
+t= 14 E -> EJECUCION
+t= 17 E agota quantum -> LISTO
+t= 17 B -> EJECUCION
+t= 18 B -> FINALIZADO
+t= 18 C -> EJECUCION
+t= 21 C agota quantum -> LISTO
+t= 21 A -> EJECUCION
+t= 24 A agota quantum -> LISTO
+t= 24 E -> EJECUCION
+t= 26 E -> FINALIZADO
+t= 26 C -> EJECUCION
+t= 27 C -> FINALIZADO
+t= 27 A -> EJECUCION
+t= 28 A -> FINALIZADO
+
+=== RR(q=6) ===
+Gantt: | A 0-6 | B 6-10 | C 10-16 | D 16-18 | E 18-23 | A 23-27 | C 27-28 |
+
+pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
+---  -------  ---  ------  ---------  -------  ------------
+  A        0   10      17          0       27           2.7
+  B        1    4       5          5        9          2.25
+  C        2    7      19          8       26          3.71
+  D        3    2      13         13       15           7.5
+  E        4    5      14         14       19           3.8
+
+Log de estados:
+t=  0 A creado -> LISTO
+t=  0 A -> EJECUCION
+t=  1 B creado -> LISTO
+t=  2 C creado -> LISTO
+t=  3 D creado -> LISTO
+t=  4 E creado -> LISTO
+t=  6 A agota quantum -> LISTO
+t=  6 B -> EJECUCION
+t= 10 B -> FINALIZADO
+t= 10 C -> EJECUCION
+t= 16 C agota quantum -> LISTO
+t= 16 D -> EJECUCION
+t= 18 D -> FINALIZADO
+t= 18 E -> EJECUCION
+t= 23 E -> FINALIZADO
+t= 23 A -> EJECUCION
+t= 27 A -> FINALIZADO
+t= 27 C -> EJECUCION
+t= 28 C -> FINALIZADO
+
+=== RR(q=20) ===
+Gantt: | A 0-10 | B 10-14 | C 14-21 | D 21-23 | E 23-28 |
+
+pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
+---  -------  ---  ------  ---------  -------  ------------
+  A        0   10       0          0       10           1.0
+  B        1    4       9          9       13          3.25
+  C        2    7      12         12       19          2.71
+  D        3    2      18         18       20          10.0
+  E        4    5      19         19       24           4.8
+
+Log de estados:
+t=  0 A creado -> LISTO
+t=  0 A -> EJECUCION
+t=  1 B creado -> LISTO
+t=  2 C creado -> LISTO
+t=  3 D creado -> LISTO
+t=  4 E creado -> LISTO
+t= 10 A -> FINALIZADO
+t= 10 B -> EJECUCION
+t= 14 B -> FINALIZADO
+t= 14 C -> EJECUCION
+t= 21 C -> FINALIZADO
+t= 21 D -> EJECUCION
+t= 23 D -> FINALIZADO
+t= 23 E -> EJECUCION
+t= 28 E -> FINALIZADO
+
+=== COMPARACIÓN ===
+algoritmo  espera_prom  respuesta_prom  retorno_prom  espera_max  cambios_contexto  uso_cpu_%  tiempo_total  equidad_jain
+---------  -----------  --------------  ------------  ----------  ----------------  ---------  ------------  ------------
+     FCFS         11.6            11.6          17.2          19                 4      100.0            28         0.614
+      SJF          9.8             9.8          15.4          19                 4      100.0            28         0.658
+  RR(q=1)         13.0             1.2          18.6          18                26      100.0            28         0.984
+  RR(q=3)         14.4             4.4          20.0          18                11      100.0            28          0.97
+  RR(q=6)         13.6             8.0          19.2          19                 6      100.0            28         0.887
+ RR(q=20)         11.6            11.6          17.2          19                 4      100.0            28         0.614

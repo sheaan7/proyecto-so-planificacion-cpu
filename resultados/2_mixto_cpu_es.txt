@@ -1,0 +1,258 @@
+ESCENARIO: 2_mixto_cpu_es
+Mezcla de procesos limitados por CPU (ráfagas largas) y limitados por E/S (ráfagas cortas con bloqueos). Formato rafagas: [CPU, E/S, CPU, ...].
+
+=== FCFS ===
+Gantt: | CPU1 0-12 | CPU2 12-22 | ES1 22-24 | ES2 24-25 | ES3 25-28 | CPU1 28-36 | CPU2 36-42 | ES2 42-43 | ES1 43-45 | ES3 45-47 | ES2 47-48 | - 48-51 | ES1 51-53 | ES2 53-54 |
+
+ pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
+----  -------  ---  ------  ---------  -------  ------------
+CPU1        0   20      14          0       36           1.8
+CPU2        1   16      22         11       41          2.56
+ ES1        2    6      33         20       51           8.5
+ ES2        3    4      35         21       51         12.75
+ ES3        5    5      32         20       42           8.4
+
+Log de estados:
+t=  0 CPU1 creado -> LISTO
+t=  0 CPU1 -> EJECUCION
+t=  1 CPU2 creado -> LISTO
+t=  2 ES1 creado -> LISTO
+t=  3 ES2 creado -> LISTO
+t=  5 ES3 creado -> LISTO
+t= 12 CPU1 solicita E/S -> BLOQUEADO
+t= 12 CPU2 -> EJECUCION
+t= 14 CPU1 termina E/S -> LISTO
+t= 22 CPU2 solicita E/S -> BLOQUEADO
+t= 22 ES1 -> EJECUCION
+t= 24 ES1 solicita E/S -> BLOQUEADO
+t= 24 ES2 -> EJECUCION
+t= 25 ES2 solicita E/S -> BLOQUEADO
+t= 25 CPU2 termina E/S -> LISTO
+t= 25 ES3 -> EJECUCION
+t= 28 ES3 solicita E/S -> BLOQUEADO
+t= 28 CPU1 -> EJECUCION
+t= 29 ES2 termina E/S -> LISTO
+t= 30 ES1 termina E/S -> LISTO
+t= 33 ES3 termina E/S -> LISTO
+t= 36 CPU1 -> FINALIZADO
+t= 36 CPU2 -> EJECUCION
+t= 42 CPU2 -> FINALIZADO
+t= 42 ES2 -> EJECUCION
+t= 43 ES2 solicita E/S -> BLOQUEADO
+t= 43 ES1 -> EJECUCION
+t= 45 ES1 solicita E/S -> BLOQUEADO
+t= 45 ES3 -> EJECUCION
+t= 47 ES3 -> FINALIZADO
+t= 47 ES2 termina E/S -> LISTO
+t= 47 ES2 -> EJECUCION
+t= 48 ES2 solicita E/S -> BLOQUEADO
+t= 51 ES1 termina E/S -> LISTO
+t= 51 ES1 -> EJECUCION
+t= 52 ES2 termina E/S -> LISTO
+t= 53 ES1 -> FINALIZADO
+t= 53 ES2 -> EJECUCION
+t= 54 ES2 -> FINALIZADO
+
+=== SJF ===
+Gantt: | CPU1 0-12 | ES2 12-13 | ES1 13-15 | ES3 15-18 | ES2 18-19 | CPU1 19-27 | ES2 27-28 | ES1 28-30 | ES3 30-32 | ES2 32-33 | CPU2 33-43 | ES1 43-45 | - 45-46 | CPU2 46-52 |
+
+ pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
+----  -------  ---  ------  ---------  -------  ------------
+CPU1        0   20       5          0       27          1.35
+CPU2        1   16      32         32       51          3.19
+ ES1        2    6      25         11       43          7.17
+ ES2        3    4      14          9       30           7.5
+ ES3        5    5      17         10       27           5.4
+
+Log de estados:
+t=  0 CPU1 creado -> LISTO
+t=  0 CPU1 -> EJECUCION
+t=  1 CPU2 creado -> LISTO
+t=  2 ES1 creado -> LISTO
+t=  3 ES2 creado -> LISTO
+t=  5 ES3 creado -> LISTO
+t= 12 CPU1 solicita E/S -> BLOQUEADO
+t= 12 ES2 -> EJECUCION
+t= 13 ES2 solicita E/S -> BLOQUEADO
+t= 13 ES1 -> EJECUCION
+t= 14 CPU1 termina E/S -> LISTO
+t= 15 ES1 solicita E/S -> BLOQUEADO
+t= 15 ES3 -> EJECUCION
+t= 17 ES2 termina E/S -> LISTO
+t= 18 ES3 solicita E/S -> BLOQUEADO
+t= 18 ES2 -> EJECUCION
+t= 19 ES2 solicita E/S -> BLOQUEADO
+t= 19 CPU1 -> EJECUCION
+t= 21 ES1 termina E/S -> LISTO
+t= 23 ES3 termina E/S -> LISTO
+t= 23 ES2 termina E/S -> LISTO
+t= 27 CPU1 -> FINALIZADO
+t= 27 ES2 -> EJECUCION
+t= 28 ES2 solicita E/S -> BLOQUEADO
+t= 28 ES1 -> EJECUCION
+t= 30 ES1 solicita E/S -> BLOQUEADO
+t= 30 ES3 -> EJECUCION
+t= 32 ES3 -> FINALIZADO
+t= 32 ES2 termina E/S -> LISTO
+t= 32 ES2 -> EJECUCION
+t= 33 ES2 -> FINALIZADO
+t= 33 CPU2 -> EJECUCION
+t= 36 ES1 termina E/S -> LISTO
+t= 43 CPU2 solicita E/S -> BLOQUEADO
+t= 43 ES1 -> EJECUCION
+t= 45 ES1 -> FINALIZADO
+t= 46 CPU2 termina E/S -> LISTO
+t= 46 CPU2 -> EJECUCION
+t= 52 CPU2 -> FINALIZADO
+
+=== RR(q=2) ===
+Gantt: | CPU1 0-2 | CPU2 2-4 | ES1 4-6 | CPU1 6-8 | ES2 8-9 | CPU2 9-11 | ES3 11-13 | CPU1 13-15 | CPU2 15-17 | ES1 17-19 | ES2 19-20 | ES3 20-21 | CPU1 21-23 | CPU2 23-25 | CPU1 25-27 | ES2 27-28 | ES1 28-30 | CPU2 30-32 | ES3 32-34 | CPU1 34-36 | ES2 36-37 | CPU2 37-39 | CPU1 39-41 | CPU2 41-43 | CPU1 43-45 | CPU2 45-47 | CPU1 47-51 |
+
+ pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
+----  -------  ---  ------  ---------  -------  ------------
+CPU1        0   20      29          0       51          2.55
+CPU2        1   16      27          1       46          2.88
+ ES1        2    6      10          2       28          4.67
+ ES2        3    4      18          5       34           8.5
+ ES3        5    5      19          6       29           5.8
+
+Log de estados:
+t=  0 CPU1 creado -> LISTO
+t=  0 CPU1 -> EJECUCION
+t=  1 CPU2 creado -> LISTO
+t=  2 ES1 creado -> LISTO
+t=  2 CPU1 agota quantum -> LISTO
+t=  2 CPU2 -> EJECUCION
+t=  3 ES2 creado -> LISTO
+t=  4 CPU2 agota quantum -> LISTO
+t=  4 ES1 -> EJECUCION
+t=  5 ES3 creado -> LISTO
+t=  6 ES1 solicita E/S -> BLOQUEADO
+t=  6 CPU1 -> EJECUCION
+t=  8 CPU1 agota quantum -> LISTO
+t=  8 ES2 -> EJECUCION
+t=  9 ES2 solicita E/S -> BLOQUEADO
+t=  9 CPU2 -> EJECUCION
+t= 11 CPU2 agota quantum -> LISTO
+t= 11 ES3 -> EJECUCION
+t= 12 ES1 termina E/S -> LISTO
+t= 13 ES2 termina E/S -> LISTO
+t= 13 ES3 agota quantum -> LISTO
+t= 13 CPU1 -> EJECUCION
+t= 15 CPU1 agota quantum -> LISTO
+t= 15 CPU2 -> EJECUCION
+t= 17 CPU2 agota quantum -> LISTO
+t= 17 ES1 -> EJECUCION
+t= 19 ES1 solicita E/S -> BLOQUEADO
+t= 19 ES2 -> EJECUCION
+t= 20 ES2 solicita E/S -> BLOQUEADO
+t= 20 ES3 -> EJECUCION
+t= 21 ES3 solicita E/S -> BLOQUEADO
+t= 21 CPU1 -> EJECUCION
+t= 23 CPU1 agota quantum -> LISTO
+t= 23 CPU2 -> EJECUCION
+t= 24 ES2 termina E/S -> LISTO
+t= 25 ES1 termina E/S -> LISTO
+t= 25 CPU2 agota quantum -> LISTO
+t= 25 CPU1 -> EJECUCION
+t= 26 ES3 termina E/S -> LISTO
+t= 27 CPU1 agota quantum -> LISTO
+t= 27 ES2 -> EJECUCION
+t= 28 ES2 solicita E/S -> BLOQUEADO
+t= 28 ES1 -> EJECUCION
+t= 30 ES1 -> FINALIZADO
+t= 30 CPU2 -> EJECUCION
+t= 32 CPU2 solicita E/S -> BLOQUEADO
+t= 32 ES2 termina E/S -> LISTO
+t= 32 ES3 -> EJECUCION
+t= 34 ES3 -> FINALIZADO
+t= 34 CPU1 -> EJECUCION
+t= 35 CPU2 termina E/S -> LISTO
+t= 36 CPU1 solicita E/S -> BLOQUEADO
+t= 36 ES2 -> EJECUCION
+t= 37 ES2 -> FINALIZADO
+t= 37 CPU2 -> EJECUCION
+t= 38 CPU1 termina E/S -> LISTO
+t= 39 CPU2 agota quantum -> LISTO
+t= 39 CPU1 -> EJECUCION
+t= 41 CPU1 agota quantum -> LISTO
+t= 41 CPU2 -> EJECUCION
+t= 43 CPU2 agota quantum -> LISTO
+t= 43 CPU1 -> EJECUCION
+t= 45 CPU1 agota quantum -> LISTO
+t= 45 CPU2 -> EJECUCION
+t= 47 CPU2 -> FINALIZADO
+t= 47 CPU1 -> EJECUCION
+t= 49 CPU1 agota quantum -> LISTO
+t= 49 CPU1 -> EJECUCION
+t= 51 CPU1 -> FINALIZADO
+
+=== RR(q=5) ===
+Gantt: | CPU1 0-5 | CPU2 5-10 | ES1 10-12 | ES2 12-13 | ES3 13-16 | CPU1 16-21 | CPU2 21-26 | ES2 26-27 | ES1 27-29 | ES3 29-31 | CPU1 31-33 | CPU2 33-38 | ES2 38-39 | ES1 39-41 | CPU1 41-46 | CPU2 46-47 | ES2 47-48 | CPU1 48-51 |
+
+ pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
+----  -------  ---  ------  ---------  -------  ------------
+CPU1        0   20      29          0       51          2.55
+CPU2        1   16      27          4       46          2.88
+ ES1        2    6      21          8       39           6.5
+ ES2        3    4      29          9       45         11.25
+ ES3        5    5      16          8       26           5.2
+
+Log de estados:
+t=  0 CPU1 creado -> LISTO
+t=  0 CPU1 -> EJECUCION
+t=  1 CPU2 creado -> LISTO
+t=  2 ES1 creado -> LISTO
+t=  3 ES2 creado -> LISTO
+t=  5 ES3 creado -> LISTO
+t=  5 CPU1 agota quantum -> LISTO
+t=  5 CPU2 -> EJECUCION
+t= 10 CPU2 agota quantum -> LISTO
+t= 10 ES1 -> EJECUCION
+t= 12 ES1 solicita E/S -> BLOQUEADO
+t= 12 ES2 -> EJECUCION
+t= 13 ES2 solicita E/S -> BLOQUEADO
+t= 13 ES3 -> EJECUCION
+t= 16 ES3 solicita E/S -> BLOQUEADO
+t= 16 CPU1 -> EJECUCION
+t= 17 ES2 termina E/S -> LISTO
+t= 18 ES1 termina E/S -> LISTO
+t= 21 ES3 termina E/S -> LISTO
+t= 21 CPU1 agota quantum -> LISTO
+t= 21 CPU2 -> EJECUCION
+t= 26 CPU2 solicita E/S -> BLOQUEADO
+t= 26 ES2 -> EJECUCION
+t= 27 ES2 solicita E/S -> BLOQUEADO
+t= 27 ES1 -> EJECUCION
+t= 29 ES1 solicita E/S -> BLOQUEADO
+t= 29 CPU2 termina E/S -> LISTO
+t= 29 ES3 -> EJECUCION
+t= 31 ES3 -> FINALIZADO
+t= 31 ES2 termina E/S -> LISTO
+t= 31 CPU1 -> EJECUCION
+t= 33 CPU1 solicita E/S -> BLOQUEADO
+t= 33 CPU2 -> EJECUCION
+t= 35 ES1 termina E/S -> LISTO
+t= 35 CPU1 termina E/S -> LISTO
+t= 38 CPU2 agota quantum -> LISTO
+t= 38 ES2 -> EJECUCION
+t= 39 ES2 solicita E/S -> BLOQUEADO
+t= 39 ES1 -> EJECUCION
+t= 41 ES1 -> FINALIZADO
+t= 41 CPU1 -> EJECUCION
+t= 43 ES2 termina E/S -> LISTO
+t= 46 CPU1 agota quantum -> LISTO
+t= 46 CPU2 -> EJECUCION
+t= 47 CPU2 -> FINALIZADO
+t= 47 ES2 -> EJECUCION
+t= 48 ES2 -> FINALIZADO
+t= 48 CPU1 -> EJECUCION
+t= 51 CPU1 -> FINALIZADO
+
+=== COMPARACIÓN ===
+algoritmo  espera_prom  respuesta_prom  retorno_prom  espera_max  cambios_contexto  uso_cpu_%  tiempo_total  equidad_jain
+---------  -----------  --------------  ------------  ----------  ----------------  ---------  ------------  ------------
+     FCFS         27.2            14.4          44.2          35                12       94.4            54         0.642
+      SJF         18.6            12.4          35.6          32                12       98.1            52         0.637
+  RR(q=2)         20.6             2.8          37.6          29                26      100.0            51          0.85
+  RR(q=5)         24.4             5.8          41.4          29                17      100.0            51         0.804

@@ -1,0 +1,10 @@
+{
+  "nombre": "1_efecto_convoy",
+  "descripcion": "Ejemplo clásico (Silberschatz): un proceso largo llega primero junto a dos cortos. Muestra el efecto convoy de FCFS.",
+  "quantums": [4],
+  "procesos": [
+    {"pid": "P1", "llegada": 0, "rafagas": [24]},
+    {"pid": "P2", "llegada": 0, "rafagas": [3]},
+    {"pid": "P3", "llegada": 0, "rafagas": [3]}
+  ]
+}

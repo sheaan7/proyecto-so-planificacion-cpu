@@ -1,0 +1,17 @@
+escenario,algoritmo,espera_prom,respuesta_prom,retorno_prom,espera_max,cambios_contexto,uso_cpu_%,tiempo_total,equidad_jain
+1_efecto_convoy,FCFS,17.0,17.0,27.0,27,2,100.0,30,0.478
+1_efecto_convoy,SJF,3.0,3.0,13.0,6,2,100.0,30,0.933
+1_efecto_convoy,RR(q=4),5.67,3.67,15.67,7,3,100.0,30,0.853
+2_mixto_cpu_es,FCFS,27.2,14.4,44.2,35,12,94.4,54,0.642
+2_mixto_cpu_es,SJF,18.6,12.4,35.6,32,12,98.1,52,0.637
+2_mixto_cpu_es,RR(q=2),20.6,2.8,37.6,29,26,100.0,51,0.85
+2_mixto_cpu_es,RR(q=5),24.4,5.8,41.4,29,17,100.0,51,0.804
+3_inanicion,FCFS,13.86,13.86,17.71,16,13,100.0,54,0.49
+3_inanicion,SJF,3.57,3.57,7.43,38,13,100.0,54,0.965
+3_inanicion,RR(q=4),11.57,9.21,15.43,35,16,100.0,54,0.674
+4_variacion_quantum,FCFS,11.6,11.6,17.2,19,4,100.0,28,0.614
+4_variacion_quantum,SJF,9.8,9.8,15.4,19,4,100.0,28,0.658
+4_variacion_quantum,RR(q=1),13.0,1.2,18.6,18,26,100.0,28,0.984
+4_variacion_quantum,RR(q=3),14.4,4.4,20.0,18,11,100.0,28,0.97
+4_variacion_quantum,RR(q=6),13.6,8.0,19.2,19,6,100.0,28,0.887
+4_variacion_quantum,RR(q=20),11.6,11.6,17.2,19,4,100.0,28,0.614

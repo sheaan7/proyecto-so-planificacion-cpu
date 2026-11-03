@@ -1,0 +1,12 @@
+{
+  "nombre": "4_variacion_quantum",
+  "descripcion": "Mismos procesos con RR a distintos quantums: quantum pequeño = más cambios de contexto y mejor respuesta; quantum grande = se comporta como FCFS.",
+  "quantums": [1, 3, 6, 20],
+  "procesos": [
+    {"pid": "A", "llegada": 0, "rafagas": [10]},
+    {"pid": "B", "llegada": 1, "rafagas": [4]},
+    {"pid": "C", "llegada": 2, "rafagas": [7]},
+    {"pid": "D", "llegada": 3, "rafagas": [2]},
+    {"pid": "E", "llegada": 4, "rafagas": [5]}
+  ]
+}
