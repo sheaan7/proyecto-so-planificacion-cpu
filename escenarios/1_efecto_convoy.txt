@@ -1,0 +1,7 @@
+# Escenario de prueba. Formato: proceso <pid> <llegada> <ráfagas CPU E/S CPU ...>
+nombre 1_efecto_convoy
+descripcion Ejemplo clásico (Silberschatz): un proceso largo llega primero junto a dos cortos. Muestra el efecto convoy de FCFS.
+quantums 4
+proceso P1 0 24
+proceso P2 0 3
+proceso P3 0 3

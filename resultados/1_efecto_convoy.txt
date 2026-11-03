@@ -4,11 +4,10 @@ Ejemplo clásico (Silberschatz): un proceso largo llega primero junto a dos cort
 === FCFS ===
 Gantt: | P1 0-24 | P2 24-27 | P3 27-30 |
 
-pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
----  -------  ---  ------  ---------  -------  ------------
- P1        0   24       0          0       24           1.0
- P2        0    3      24         24       27           9.0
- P3        0    3      27         27       30          10.0
+pid      llegada  cpu espera respuesta retorno retorno_norm
+P1             0   24      0         0      24         1.00
+P2             0    3     24        24      27         9.00
+P3             0    3     27        27      30        10.00
 
 Log de estados:
 t=  0 P1 creado -> LISTO
@@ -24,11 +23,10 @@ t= 30 P3 -> FINALIZADO
 === SJF ===
 Gantt: | P2 0-3 | P3 3-6 | P1 6-30 |
 
-pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
----  -------  ---  ------  ---------  -------  ------------
- P1        0   24       6          6       30          1.25
- P2        0    3       0          0        3           1.0
- P3        0    3       3          3        6           2.0
+pid      llegada  cpu espera respuesta retorno retorno_norm
+P1             0   24      6         6      30         1.25
+P2             0    3      0         0       3         1.00
+P3             0    3      3         3       6         2.00
 
 Log de estados:
 t=  0 P1 creado -> LISTO
@@ -44,11 +42,10 @@ t= 30 P1 -> FINALIZADO
 === RR(q=4) ===
 Gantt: | P1 0-4 | P2 4-7 | P3 7-10 | P1 10-30 |
 
-pid  llegada  cpu  espera  respuesta  retorno  retorno_norm
----  -------  ---  ------  ---------  -------  ------------
- P1        0   24       6          0       30          1.25
- P2        0    3       4          4        7          2.33
- P3        0    3       7          7       10          3.33
+pid      llegada  cpu espera respuesta retorno retorno_norm
+P1             0   24      6         0      30         1.25
+P2             0    3      4         4       7         2.33
+P3             0    3      7         7      10         3.33
 
 Log de estados:
 t=  0 P1 creado -> LISTO
@@ -72,8 +69,8 @@ t= 26 P1 -> EJECUCION
 t= 30 P1 -> FINALIZADO
 
 === COMPARACIÓN ===
-algoritmo  espera_prom  respuesta_prom  retorno_prom  espera_max  cambios_contexto  uso_cpu_%  tiempo_total  equidad_jain
----------  -----------  --------------  ------------  ----------  ----------------  ---------  ------------  ------------
-     FCFS         17.0            17.0          27.0          27                 2      100.0            30         0.478
-      SJF          3.0             3.0          13.0           6                 2      100.0            30         0.933
-  RR(q=4)         5.67            3.67         15.67           7                 3      100.0            30         0.853
+algoritmo  espera_prom respuesta_prom retorno_prom espera_max cambios_contexto uso_cpu_% tiempo_total equidad_jain
+FCFS             17.00          17.00        27.00         27                2     100.0           30        0.478
+SJF               3.00           3.00        13.00          6                2     100.0           30        0.933
+RR(q=4)           5.67           3.67        15.67          7                3     100.0           30        0.852
+

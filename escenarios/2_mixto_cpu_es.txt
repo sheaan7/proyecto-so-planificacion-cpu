@@ -1,0 +1,9 @@
+# Escenario de prueba. Formato: proceso <pid> <llegada> <ráfagas CPU E/S CPU ...>
+nombre 2_mixto_cpu_es
+descripcion Mezcla de procesos limitados por CPU (ráfagas largas) y limitados por E/S (ráfagas cortas con bloqueos). Formato rafagas: [CPU, E/S, CPU, ...].
+quantums 2 5
+proceso CPU1 0 12 2 8
+proceso CPU2 1 10 3 6
+proceso ES1 2 2 6 2 6 2
+proceso ES2 3 1 4 1 4 1 4 1
+proceso ES3 5 3 5 2

@@ -1,0 +1,9 @@
+# Escenario de prueba. Formato: proceso <pid> <llegada> <ráfagas CPU E/S CPU ...>
+nombre 4_variacion_quantum
+descripcion Mismos procesos con RR a distintos quantums: quantum pequeño = más cambios de contexto y mejor respuesta; quantum grande = se comporta como FCFS.
+quantums 1 3 6 20
+proceso A 0 10
+proceso B 1 4
+proceso C 2 7
+proceso D 3 2
+proceso E 4 5

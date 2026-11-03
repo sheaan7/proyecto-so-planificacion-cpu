@@ -1,0 +1,18 @@
+# Escenario de prueba. Formato: proceso <pid> <llegada> <ráfagas CPU E/S CPU ...>
+nombre 3_inanicion
+descripcion Un proceso largo compite con un flujo continuo de procesos cortos. SJF lo pospone constantemente (inanición).
+quantums 4
+proceso S0 0 3
+proceso LARGO 1 15
+proceso S1 2 3
+proceso S2 5 3
+proceso S3 8 3
+proceso S4 11 3
+proceso S5 14 3
+proceso S6 17 3
+proceso S7 20 3
+proceso S8 23 3
+proceso S9 26 3
+proceso S10 29 3
+proceso S11 32 3
+proceso S12 35 3
