@@ -47,6 +47,8 @@ En Windows (PowerShell) se cambia `$PWD` por `${PWD}` y se omite `--user ...`.
 | `escenarios/*.txt` | Escenarios de prueba |
 | `resultados/` | Evidencias generadas |
 | `INFORME.md` | Borrador del informe técnico y guion de sustentación |
+| `presentacion.sh` | Sustentación guiada paso a paso (`./presentacion.sh`, requiere la imagen Docker) |
+| `PRESENTACION.md` | Instructivo: qué decir en cada pantalla del script |
 
 ## Crear un escenario propio
 ```text
